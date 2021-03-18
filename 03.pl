@@ -14,7 +14,7 @@ main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 %% count_valid(+Triples, -Count) is det
 %  Count is the number of valid triangles in Triples.
 count_valid([], 0).
-count_valid([T|Ts], N1) :- valid(T), !, count_valid(Ts, N), N1 is N+1.
+count_valid([T|Ts], N1) :- valid(T), !, count_valid(Ts, N), N1 #= N+1.
 count_valid([T|Ts], N) :- \+ valid(T), count_valid(Ts, N).
 
 %% valid(+Sides) is semidet

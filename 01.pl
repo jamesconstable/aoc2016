@@ -58,12 +58,12 @@ move(D, state(X/Y, DX/DY, _), state((X + D*DX)/(Y + D*DY), DX/DY, _)).
 visit_move(0, State, State).
 visit_move(_, dest(L, D, S), dest(L, D, S)).
 visit_move(D, state(X/Y, DX/DY, Seen), dest(X1/Y1, DX/DY, Seen)) :-
-  D > 0,
-  X1 is X + DX, Y1 is Y + DY,
+  D #> 0,
+  X1 #= X + DX, Y1 #= Y + DY,
   get_assoc(X1/Y1, Seen, _).
 visit_move(D, state(X/Y, DX/DY, Seen), R) :-
-  D > 0, D1 is D-1,
-  X1 is X + DX, Y1 is Y + DY,
+  D #> 0, D1 #= D-1,
+  X1 #= X + DX, Y1 #= Y + DY,
   put_assoc(X1/Y1, Seen, _, Seen1),
   visit_move(D1, state(X1/Y1, DX/DY, Seen1), R).
 
