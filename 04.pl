@@ -33,16 +33,6 @@ encrypt(room(Plaintext, S, Cs), room(Encrypted, S, Cs)) :-
     {Rotmap}/[P, E]>>memberchk(P-E, [' '-'-'|Rotmap]),
     Plaintext, Encrypted).
 
-%% rotate_list(?Distance, ?List, ?Rotated)
-%  Rotated is the forwards rotation of List by Distance. For example,
-%  rotate_list(1, [a, b, c], X) -> X = [c, a, b]. Can be used in any mode,
-%  though CLP(FD) membership constraints may be required if Distance is unbound.
-rotate_list(Distance, List, Rotated) :-
-  length(List, L),
-  N #= Distance mod L,
-  split_at(N, List, A, B),
-  append(B, A, Rotated), !.
-
 %% is_room(+Room) is semidet
 %  True if Room is a non-decoy room.
 is_room(room(Name, _, Checksum)) :-
@@ -54,11 +44,6 @@ is_room(room(Name, _, Checksum)) :-
     RLE, RLESorted),
   pairs_values(RLESorted, FullChecksum),
   split_at(5, FullChecksum, Checksum, _).
-
-%% split_at(?Index, ?List, ?Init, ?Tail)
-%  List is the concatenation of Init and Tail, where Init has length Index.
-split_at(0, Xs, [], Xs).
-split_at(N, [X|Xs], [X|A], B) :- N #> 0, N1 #= N-1, split_at(N1, Xs, A, B).
 
 % Input grammar
 room_grammar(room(Name, Sector, Checksum)) -->

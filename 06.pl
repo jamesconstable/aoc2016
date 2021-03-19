@@ -23,14 +23,6 @@ decode(Selector, Ls, Message) :-
     Cols, Chars),
   atom_chars(Message, Chars), !.
 
-%% rows_cols(+Rows, -Cols) is det
-%% rows_cols(-Rows, +Cols) is det
-%  Rows is the transpose of Cols, where both are lists of lists.
-rows_cols(Rows, []) :- maplist(=([]), Rows), !.
-rows_cols(Rows, [Col|Cols]) :-
-  maplist([[C|Cs], C, Cs]>>true, Rows, Col, Rows1),
-  rows_cols(Rows1, Cols).
-
 % Input grammar
 grammar([])     --> [].
 grammar([L|Ls]) -->
