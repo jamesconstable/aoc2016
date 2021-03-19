@@ -16,3 +16,10 @@ rle(Xs, [L-E|Rs]) :- split_eqs(Xs, [E|Es], T), length([E|Es], L), rle(T, Rs).
 split_eqs([X], [X], []).
 split_eqs([X, X|Xs], [X|Eqs], Rest) :- split_eqs([X|Xs], Eqs, Rest).
 split_eqs([X1, X2|Xs], [X1], [X2|Xs]) :- X1 \= X2.
+
+%% count(:Pred, +Xs, -N) is det
+%  N is the number of elements in Xs that satisfy Pred.
+count(_, [], 0).
+count(Pred, [X|Xs], N1) :- call(Pred, X), !, count(Pred, Xs, N), N1 #= N + 1.
+count(Pred, [_|Xs], N) :- count(Pred, Xs, N).
+
