@@ -52,3 +52,14 @@ rows_cols(Rows, [Col|Cols]) :-
 get_default_assoc(K, _, Assoc, V) :- get_assoc(K, Assoc, V).
 get_default_assoc(K, Default, Assoc, Default) :- \+ get_assoc(K, Assoc, _).
 
+%% set_nth0(?N, ?Xs, ?V, ?Xs1)
+%  Xs1 is Xs, but with the item at index N (zero-based) set to V.
+set_nth0(N, List, Elem, List1) :-
+  nth0(N, List, _, ListWithoutN),
+  nth0(N, List1, Elem, ListWithoutN).
+
+%% set_nth1(?N, ?Xs, ?V, ?Xs1)
+%  Xs1 is Xs, but with the item at index N (one-based) set to V.
+set_nth1(N, List, Elem, List1) :-
+  nth1(N, List, _, ListWithoutN),
+  nth1(N, List1, Elem, ListWithoutN).

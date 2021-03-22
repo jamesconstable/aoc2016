@@ -50,11 +50,6 @@ update(col(X, V), Display, Display1) :-
   update(row(X, V), DisplayT, DisplayT1),
   rows_cols(DisplayT1, Display1).
 
-%% set_nth0(?N, ?Xs, ?V, ?Xs1)
-%  Xs1 is Xs, but with the item at index N (zero-based) set to V.
-set_nth0(0, [_|Xs], V, [V|Xs]).
-set_nth0(N, [X|Xs], V, [X|Xs1]) :- N #> 0, N1 #= N-1, set_nth0(N1, Xs, V, Xs1).
-
 %% lit_count(+Rs, -Count) is det
 %  Rs is a list of lists containing Count '#' atoms.
 lit_count(Rs, Count) :- maplist(count(=(#)), Rs, RCs), !, sum_list(RCs, Count).
