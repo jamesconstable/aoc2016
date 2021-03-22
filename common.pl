@@ -45,3 +45,10 @@ rows_cols(Rows, []) :- maplist(=([]), Rows), !.
 rows_cols(Rows, [Col|Cols]) :-
   maplist([[C|Cs], C, Cs]>>true, Rows, Col, Rows1),
   rows_cols(Rows1, Cols).
+
+%% get_default_assoc(+Key, +Default, +Assoc, -Value) is det
+%  Value is the mapping of Key in Assoc, or Default if Assoc does not have a
+%  mapping for Key.
+get_default_assoc(K, _, Assoc, V) :- get_assoc(K, Assoc, V).
+get_default_assoc(K, Default, Assoc, Default) :- \+ get_assoc(K, Assoc, _).
+

@@ -70,12 +70,6 @@ put_keys([X|Xs], Assoc, Assoc2) :-
   put_assoc(X, Assoc, [], Assoc1),
   put_keys(Xs, Assoc1, Assoc2).
 
-%% get_default_assoc(+Key, +Default, +Assoc, -Value) is det
-%  Value is the mapping of Key in Assoc, or Default if Assoc does not have a
-%  mapping for Key.
-get_default_assoc(K, _, Assoc, V) :- get_assoc(K, Assoc, V).
-get_default_assoc(K, Default, Assoc, Default) :- \+ get_assoc(K, Assoc, _).
-
 %% execute_until(:Pred, +State, -State1) is nondet
 %  Advances the simulation from State, until a State1 satisfying Pred is found.
 %  On backtracking, ignores State1 and continues simulation until another
