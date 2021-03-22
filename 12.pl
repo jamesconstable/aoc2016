@@ -14,11 +14,11 @@ main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 part1(Instructions, A) :-
   instructions_to_program(Instructions, Program, L),
-  execute(Program, L, 1, [0, 0, 0, 0], [A|_]).
+  execute(Program, L, 1, _{a:0, b:0, c:0, d:0}, _{a:A, b:_, c:_, d:_}).
 
 part2(Instructions, A) :-
   instructions_to_program(Instructions, Program, L),
-  execute(Program, L, 1, [0, 0, 1, 0], [A|_]).
+  execute(Program, L, 1, _{a:0, b:0, c:1, d:0}, _{a:A, b:_, c:_, d:_}).
 
 %% instructions_to_program(+Instructions, -Program, -Length) is det
 %  Program is a line-number indexed dict formed from Instructions, and Length
@@ -43,21 +43,18 @@ execute(Program, NumLines, Line, RegistersIn, RegistersOut) :-
 %  L1 is the new line number and Registers1 the new register state after
 %  executing Instruction from line L with initial Registers.
 execute_instruction(cpy_val(V, Dest), L, L1, Rs, Rs1) :-
-  set_register(Dest, Rs, V, Rs1),
+  Rs1 = Rs.put(Dest, V),
   L1 #= L + 1.
 execute_instruction(cpy_reg(R, Dest), L, L1, Rs, Rs1) :-
-  get_register(R, Rs, V),
-  set_register(Dest, Rs, V, Rs1),
+  Rs1 = Rs.put(Dest, Rs.R),
   L1 #= L + 1.
 execute_instruction(inc(R), L, L1, Rs, Rs1) :-
-  get_register(R, Rs, V),
-  V1 #= V + 1,
-  set_register(R, Rs, V1, Rs1),
+  V is Rs.R + 1,
+  Rs1 = Rs.put(R, V),
   L1 #= L + 1.
 execute_instruction(dec(R), L, L1, Rs, Rs1) :-
-  get_register(R, Rs, V),
-  V1 #= V - 1,
-  set_register(R, Rs, V1, Rs1),
+  V is Rs.R - 1,
+  Rs1 = Rs.put(R, V),
   L1 #= L + 1.
 execute_instruction(jnz_val(0, _), L, L1, Rs, Rs) :-
   L1 #= L + 1.
@@ -65,26 +62,11 @@ execute_instruction(jnz_val(N, D), L, L1, Rs, Rs) :-
   N #\= 0,
   L1 #= L + D.
 execute_instruction(jnz_reg(R, _), L, L1, Rs, Rs) :-
-  get_register(R, Rs, 0),
+  Rs.R #= 0,
   L1 #= L + 1.
 execute_instruction(jnz_reg(R, D), L, L1, Rs, Rs) :-
-  get_register(R, Rs, V),
-  V #\= 0,
+  Rs.R #\= 0,
   L1 #= L + D.
-
-%% get_register(?Register, ?Registers, ?Value) is det
-%  Value is the current value of Register (a, b, c, or d) in Registers.
-get_register(a, [A, _, _, _], A).
-get_register(b, [_, B, _, _], B).
-get_register(c, [_, _, C, _], C).
-get_register(d, [_, _, _, D], D).
-
-%% set_register(?Register, ?Registers, ?Value, ?Registers1) is det
-%  Registers1 is Registers, but with Register (a, b, c, or d) set to Value.
-set_register(a, [_, B, C, D], A, [A, B, C, D]).
-set_register(b, [A, _, C, D], B, [A, B, C, D]).
-set_register(c, [A, B, _, D], C, [A, B, C, D]).
-set_register(d, [A, B, C, _], D, [A, B, C, D]).
 
 % Input grammar
 instruction_dcg(cpy_val(V, Dest)) -->
