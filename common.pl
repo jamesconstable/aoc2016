@@ -63,3 +63,16 @@ set_nth0(N, List, Elem, List1) :-
 set_nth1(N, List, Elem, List1) :-
   nth1(N, List, _, ListWithoutN),
   nth1(N, List1, Elem, ListWithoutN).
+
+%% yes(@Arg1, ...) is det
+%  Always succeeds.
+yes(_).
+yes(_, _).
+yes(_, _, _).
+
+%% no(@Arg1, ...) is det
+%  Always fails.
+no(_) :- false.
+no(_, _) :- false.
+no(_, _, _) :- false.
+
