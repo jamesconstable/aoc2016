@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(grammar(Id)), part1(Id, Password), writeln(Password).
-main(['2']) :- read_input(grammar(Id)), part2(Id, Password), writeln(Password).
+main(['1']) :- !, read_input(grammar(Id)), part1(Id, P), writeln(P).
+main(['2']) :- !, read_input(grammar(Id)), part2(Id, P), writeln(P).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 part1(Id, Password) :- length(Cs, 8), crack(Id, Cs), atom_chars(Password, Cs).

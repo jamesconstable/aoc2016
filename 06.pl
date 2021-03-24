@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(grammar(Ls)), decode(max_member, Ls, M), writeln(M).
-main(['2']) :- read_input(grammar(Ls)), decode(min_member, Ls, M), writeln(M).
+main(['1']) :- !, read_input(grammar(L)), decode(max_member, L, M), writeln(M).
+main(['2']) :- !, read_input(grammar(L)), decode(min_member, L, M), writeln(M).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 %% decode(:Selector, +Ls, -Message) is det

@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(rooms_grammar(Rs)), part1(Rs, S), writeln(S).
-main(['2']) :- read_input(rooms_grammar(Rs)), part2(Rs, S), writeln(S).
+main(['1']) :- !, read_input(rooms_grammar(Rs)), part1(Rs, S), writeln(S).
+main(['2']) :- !, read_input(rooms_grammar(Rs)), part2(Rs, S), writeln(S).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 part1(Rooms, Sum) :-

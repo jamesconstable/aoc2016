@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- run_with(supports_tls).
-main(['2']) :- run_with(supports_ssl).
+main(['1']) :- !, run_with(supports_tls).
+main(['2']) :- !, run_with(supports_ssl).
 main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 run_with(Pred) :- read_input(lines_dcg(IPs)), count(Pred, IPs, C), writeln(C).

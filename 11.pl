@@ -8,8 +8,8 @@
 
 :- use_module(library(dcg/high_order)).
 
-main(['1']) :- read_input(lines_dcg(Floors)), part1(Floors, R), writeln(R).
-main(['2']) :- read_input(lines_dcg(Floors)), part2(Floors, R), writeln(R).
+main(['1']) :- !, read_input(lines_dcg(Floors)), part1(Floors, R), writeln(R).
+main(['2']) :- !, read_input(lines_dcg(Floors)), part2(Floors, R), writeln(R).
 main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 part1(Floors, R) :-

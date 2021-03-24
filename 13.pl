@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input((integer(DFN), blanks)), part1(DFN, R), writeln(R).
-main(['2']) :- read_input((integer(DFN), blanks)), part2(DFN, R), writeln(R).
+main(['1']) :- !, read_input((integer(DFN), blanks)), part1(DFN, R), writeln(R).
+main(['2']) :- !, read_input((integer(DFN), blanks)), part2(DFN, R), writeln(R).
 main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 part1(DFN, R) :- bfs(1/1, unbounded_step(DFN), =(31/39), (=), _, R).

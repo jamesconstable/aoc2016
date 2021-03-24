@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(triples(Ts)), count_valid(Ts, C), writeln(C).
-main(['2']) :-
+main(['1']) :- !, read_input(triples(Ts)), count_valid(Ts, C), writeln(C).
+main(['2']) :- !,
   read_input(triples(Ts)), cols_rows(Ts, Ts1), count_valid(Ts1, C), writeln(C).
 main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 

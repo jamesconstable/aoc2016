@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(steps(Steps)), part1(Steps, R), writeln(R).
-main(['2']) :- read_input(steps(Steps)), part2(Steps, R), writeln(R).
+main(['1']) :- !, read_input(steps(Steps)), part1(Steps, R), writeln(R).
+main(['2']) :- !, read_input(steps(Steps)), part2(Steps, R), writeln(R).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 % The state functor has the structure state(X/Y, DX/DY, Seen), where X/Y is the

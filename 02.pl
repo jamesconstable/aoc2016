@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(instructions(I)), solve(pad1, I, 1/1, R), writeln(R).
-main(['2']) :- read_input(instructions(I)), solve(pad2, I, 0/2, R), writeln(R).
+main(['1']) :- !, read_input(instructions(I)), solve(pad1, I, 1/1, R), writeln(R).
+main(['2']) :- !, read_input(instructions(I)), solve(pad2, I, 0/2, R), writeln(R).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 solve(Pad, Is, Start, R) :-

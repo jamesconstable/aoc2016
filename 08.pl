@@ -6,12 +6,12 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :-
+main(['1']) :- !,
   read_input(instructions_dcg(Is)),
   execute(Is, 50, 6, Final),
   lit_count(Final, C),
   writeln(C).
-main(['2']) :-
+main(['2']) :- !,
   read_input(instructions_dcg(Is)),
   execute(Is, 50, 6, Final),
   write_display(Final).

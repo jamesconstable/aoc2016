@@ -6,8 +6,8 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-main(['1']) :- read_input(decompress_dcg(L)), writeln(L).
-main(['2']) :- read_input(decompress_dcg2(L)), writeln(L).
+main(['1']) :- !, read_input(decompress_dcg(L)), writeln(L).
+main(['2']) :- !, read_input(decompress_dcg2(L)), writeln(L).
 main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 %% space(+X) is semidet
