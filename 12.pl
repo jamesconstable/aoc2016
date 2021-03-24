@@ -6,8 +6,6 @@
 :- initialization(main, main).
 :- ensure_loaded('common.pl').
 
-:- use_module(library(dcg/high_order)).
-
 main(['1']) :- read_input(instructions_dcg(Is)), part1(Is, R), writeln(R).
 main(['2']) :- read_input(instructions_dcg(Is)), part2(Is, R), writeln(R).
 main(_) :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
