@@ -11,8 +11,12 @@ main(['2']) :- !, read_input(input_dcg(I)), part2(I, R), writeln(R).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
 
 part1(I, R) :- msort(I, S), once(valid_ip(S, R)).
+part2(I, R) :- msort(I, S), findall(N, valid_ip(S, N), Ns), length(Ns, R).
 
-valid_ip(Ranges, Result) :- valid_ip(0, Ranges, Result).
+%% valid_ip(+Ranges, ?IP) is nondet
+%  True if IP is a valid IP given the blocked ranges specified in Ranges. If IP
+%  is unbound, it will take all valid values in ascending order on backtracking.
+valid_ip(Ranges, IP) :- valid_ip(0, Ranges, IP).
 
 valid_ip(N, _, _) :- N #> 4294967295, !, fail.
 valid_ip(N, [], N).
