@@ -8,9 +8,18 @@
 
 :- use_module(library('dcg/high_order')).
 
-main(['1']) :- !, read_input(input_dcg(Ns)), writeln(Ns).
+main(['1']) :- !, read_input(input_dcg(Ns)), part1(Ns, R), writeln(R).
 main(['2']) :- !, read_input(input_dcg(Ns)), writeln(Ns).
 main(_)     :- writeln(user_error, 'Invalid part number. Must be 1 or 2.').
+
+part1(Nodes, Count) :-
+  findall(A-B, (member(A, Nodes), member(B, Nodes), viable(A, B)), Pairs),
+  length(Pairs, Count).
+
+viable(node(A, _, Used, _, _), node(B, _, _, Free, _)) :-
+  A \= B,
+  Used #> 0,
+  Free #>= Used.
 
 % Input grammar.
 input_dcg(Ns) -->
