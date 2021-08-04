@@ -25,7 +25,7 @@ solve_longest(Input, Length) :-
 %  the bfs/6 contract. Returns all possible successor states on backtracking;
 %  fails immediately in a deadend.
 next_state(_, State, State1) :-
-  State = state(P, Key),
+  State = state(_, Key),
   md5_hash(Key, Hash, [encoding(utf8)]),
   atom_chars(Hash, [U, D, L, R|_]),
   maplist(
@@ -71,7 +71,7 @@ is_goal(state(3/3, _)).
 dfs(Init, Init, 0) :- is_goal(Init).
 dfs(Init, Goal, N1) :-
   next_state(_, Init, Next),
-  find_goal(Next, Goal, N),
+  dfs(Next, Goal, N),
   N1 #= N + 1.
 
 % Input grammar.
