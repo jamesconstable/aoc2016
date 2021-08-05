@@ -98,9 +98,14 @@ bfs(Init, NextState, IsGoal, Canonical, Final, Cost) :-
 bfs(Q, _, _, _, _, _, _, _) :-
   var(Q), !, fail.
 bfs([Step-State|_], _, Seen, _, IsGoal, Canonical, State, Step) :-
-  call(IsGoal, State),
-  \+ is_seen(State, Canonical, Seen).
+  \+ is_seen(State, Canonical, Seen),
+  call(IsGoal, State).
+bfs([_-State|Q], Q1, Seen, NextState, IsGoal, Canonical, Final, Cost) :-
+  is_seen(State, Canonical, Seen),
+  !,    % Green cut; remove choice point to enable tail recursion
+  bfs(Q, Q1, Seen, NextState, IsGoal, Canonical, Final, Cost).
 bfs([Step-State|Q], Q1, Seen, NextState, IsGoal, Canonical, Final, Cost) :-
+  \+ is_seen(State, Canonical, Seen),
   call(Canonical, State, StateC),
   put_assoc(StateC, Seen, _, Seen1),
   findall(Next, call(NextState, Step, State, Next), NextStates),
